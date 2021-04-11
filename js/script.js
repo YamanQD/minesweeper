@@ -2,6 +2,7 @@ import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js';
 var BOARD_SIZE = 6, MINE_COUNT = 5;
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
+var gameEndText = document.querySelector('.game-end');
 var minesLeftText = document.querySelector('[data-mines-left]');
 minesLeftText.textContent = MINE_COUNT + "";
 boardElement.style.setProperty("--size", BOARD_SIZE + "");
@@ -33,6 +34,7 @@ var checkGameEnd = function () {
         boardElement.addEventListener("contextmenu", stopProp, { capture: true });
     }
     if (lose) {
+        gameEndText.textContent = "YOU LOSE!";
         board.forEach(function (row) {
             row.forEach(function (tile) {
                 if (tile.mine) {
@@ -40,6 +42,9 @@ var checkGameEnd = function () {
                 }
             });
         });
+    }
+    else if (win) {
+        gameEndText.textContent = "YOU WIN!";
     }
 };
 var checkLose = function () {

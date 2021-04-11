@@ -3,8 +3,9 @@ import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js'
 const BOARD_SIZE = 6, MINE_COUNT = 5
 
 const board = createBoard(BOARD_SIZE, MINE_COUNT)
-const boardElement = <HTMLElement>document.querySelector('.board')
-const minesLeftText = <HTMLElement>document.querySelector('[data-mines-left]')
+const boardElement = <HTMLElement> document.querySelector('.board')
+const gameEndText = <HTMLElement> document.querySelector('.game-end')
+const minesLeftText = <HTMLElement> document.querySelector('[data-mines-left]')
 minesLeftText.textContent = MINE_COUNT + ""
 
 boardElement.style.setProperty("--size", BOARD_SIZE + "")
@@ -43,6 +44,7 @@ const checkGameEnd = (): void => {
     }
 
     if (lose) {
+        gameEndText.textContent = "YOU LOSE!"
         board.forEach(row => {
             row.forEach(tile => {
                 if (tile.mine) {
@@ -50,6 +52,8 @@ const checkGameEnd = (): void => {
                 }
             })
         })
+    } else if (win) {
+        gameEndText.textContent = "YOU WIN!"
     }
 }
 

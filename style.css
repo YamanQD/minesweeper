@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+.game-end {
+  font-size: 28px;
+  color: red;
+}
+
 .board {
   display: grid;
   grid-template-rows: repeat(var(--size), 60px);

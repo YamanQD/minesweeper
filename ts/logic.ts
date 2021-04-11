@@ -1,7 +1,8 @@
 type tile = {
 	element: Element,
 	x: number,
-	y: number
+	y: number,
+	mine: boolean
 }
 
 const TILE_STATUSES = {

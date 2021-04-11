@@ -15,7 +15,7 @@ export var createBoard = function (boardSize, numberOfMines) {
                 element: element,
                 x: x,
                 y: y,
-                mine: minePositions.filter(function (p) { return tileIsEqual({ x: x, y: y }, p); }).length != 0,
+                mine: minePositions.filter(function (p) { return positionIsEqual({ x: x, y: y }, p); }).length != 0,
                 get status() {
                     return this.element.dataset.status;
                 },
@@ -43,7 +43,7 @@ var getMinePositions = function (boardSize, numberOfMines) {
             x: randomNumber(boardSize),
             y: randomNumber(boardSize)
         };
-        if (positions.filter(function (p) { return tileIsEqual(p, position); }).length === 0) {
+        if (positions.filter(function (p) { return positionIsEqual(p, position); }).length === 0) {
             positions.push(position);
         }
     };
@@ -55,7 +55,7 @@ var getMinePositions = function (boardSize, numberOfMines) {
 var randomNumber = function (size) {
     return Math.floor(Math.random() * size);
 };
-var tileIsEqual = function (tile1, tile2) {
+var positionIsEqual = function (tile1, tile2) {
     return tile1.x === tile2.x && tile1.y === tile2.y;
 };
 export var revealTile = function (board, tile) {

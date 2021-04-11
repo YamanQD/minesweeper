@@ -26,7 +26,7 @@ export const createBoard = (boardSize: number, numberOfMines: number): tileType[
 				element,
 				x,
 				y,
-				mine: minePositions.filter(p => tileIsEqual({x,y}, p)).length != 0,
+				mine: minePositions.filter(p => positionIsEqual({x,y}, p)).length != 0,
 				get status(): string {
 					return <string> this.element.dataset.status
 				},
@@ -51,7 +51,7 @@ const getMinePositions = (boardSize: number, numberOfMines: number): {x: number,
 			y: randomNumber(boardSize)
 		}
 
-		if(positions.filter(p => tileIsEqual(p, position)).length === 0) {
+		if(positions.filter(p => positionIsEqual(p, position)).length === 0) {
 			positions.push(position)
 		}
 	}
@@ -63,7 +63,7 @@ const randomNumber = (size: number): number => {
 	return Math.floor(Math.random() * size)
 }
 
-const tileIsEqual = (tile1: any, tile2: any): boolean => {
+const positionIsEqual = (tile1: any, tile2: any): boolean => {
 	return tile1.x === tile2.x && tile1.y === tile2.y
 } 
 

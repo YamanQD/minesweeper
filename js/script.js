@@ -1,5 +1,5 @@
 import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js';
-var BOARD_SIZE = 3, MINE_COUNT = 4;
+var BOARD_SIZE = 6, MINE_COUNT = 10;
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
 var minesLeftText = document.querySelector('[data-mines-left]');
@@ -10,6 +10,7 @@ board.forEach(function (row) {
         boardElement === null || boardElement === void 0 ? void 0 : boardElement.append(tile.element);
         tile.element.addEventListener('click', function () {
             revealTile(board, tile);
+            checkGameOver();
         });
         tile.element.addEventListener('contextmenu', function (e) {
             e.preventDefault();
@@ -23,4 +24,20 @@ var countMinesLeft = function () {
         return count + row.filter(function (tile) { return tile.status === TILE_STATUSES.MARKED; }).length;
     }, 0);
     minesLeftText.textContent = MINE_COUNT - markedMines + "";
+};
+var checkGameOver = function () {
+    var gameOver = board.some(function (row) {
+        return row.some(function (tile) {
+            return tile.status === TILE_STATUSES.MINE;
+        });
+    });
+    if (gameOver) {
+        board.forEach(function (row) {
+            row.forEach(function (tile) {
+                if (tile.mine) {
+                    tile.status = TILE_STATUSES.MINE;
+                }
+            });
+        });
+    }
 };

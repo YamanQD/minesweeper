@@ -1,8 +1,12 @@
+* {
+  box-sizing: border-box;
+}
+
 .board {
   display: grid;
   grid-template-rows: repeat(var(--size), 60px);
   grid-template-columns: repeat(var(--size), 60px);
-  gap: 8px;
+  gap: 6px;
   background-color: white;
 }
 
@@ -10,6 +14,10 @@
   height: 100%;
   width: 100%;
   border: 2px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 }
 
 .board > [data-status="hidden"] {

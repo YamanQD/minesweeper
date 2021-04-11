@@ -64,9 +64,18 @@ export var revealTile = function (board, tile) {
     }
     if (tile.mine) {
         tile.status = TILE_STATUSES.MINE;
+        return;
+    }
+    tile.status = TILE_STATUSES.NUMBER;
+    var nearbyTiles = getNearbyTiles(board, { x: tile.x, y: tile.y });
+    var nearbyMines = nearbyTiles.reduce(function (count, t) {
+        return count + (t.mine ? 1 : 0);
+    }, 0);
+    if (nearbyMines) {
+        tile.element.textContent = nearbyMines + "";
     }
     else {
-        tile.status = TILE_STATUSES.NUMBER;
+        nearbyTiles.forEach(function (t) { return revealTile(board, t); });
     }
 };
 export var markTile = function (tile) {
@@ -76,4 +85,18 @@ export var markTile = function (tile) {
     else if (tile.status === TILE_STATUSES.MARKED) {
         tile.status = TILE_STATUSES.HIDDEN;
     }
+};
+var getNearbyTiles = function (board, _a) {
+    var _b;
+    var x = _a.x, y = _a.y;
+    var tiles = [];
+    for (var xOffset = -1; xOffset <= 1; xOffset++) {
+        for (var yOffset = -1; yOffset <= 1; yOffset++) {
+            var tile = (_b = board[x + xOffset]) === null || _b === void 0 ? void 0 : _b[y + yOffset];
+            if (tile) {
+                tiles.push(tile);
+            }
+        }
+    }
+    return tiles;
 };

@@ -1,6 +1,6 @@
 import {createBoard, revealTile, markTile, TILE_STATUSES} from './logic.js'
 
-const BOARD_SIZE = 3, MINE_COUNT = 4
+const BOARD_SIZE = 6, MINE_COUNT = 10
 
 const board = createBoard(BOARD_SIZE, MINE_COUNT)
 
@@ -16,6 +16,7 @@ board.forEach(row => {
 
         tile.element.addEventListener('click', () => {
             revealTile(board, tile)
+            checkGameOver()
         })
         tile.element.addEventListener('contextmenu', (e) => {
             e.preventDefault()
@@ -31,4 +32,22 @@ const countMinesLeft = (): void => {
     }, 0)
 
     minesLeftText.textContent =  MINE_COUNT - markedMines + ""
+}
+
+const checkGameOver = (): void => {
+    const gameOver: boolean = board.some(row => {
+        return row.some(tile => {
+            return tile.status === TILE_STATUSES.MINE
+        })
+    })
+
+    if (gameOver) {
+        board.forEach(row => {
+            row.forEach(tile => {
+                if(tile.mine) {
+                    tile.status = TILE_STATUSES.MINE
+                }
+            })
+        })
+    }
 }

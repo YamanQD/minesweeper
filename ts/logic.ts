@@ -71,12 +71,23 @@ export const revealTile = (board: tileType[][], tile: tileType): void => {
 	if(!(tile.status === TILE_STATUSES.HIDDEN)) {
 		return
 	}
-
     if (tile.mine) {
         tile.status = TILE_STATUSES.MINE
-    } else {
-        tile.status = TILE_STATUSES.NUMBER
-    }
+		return
+	}
+
+	tile.status = TILE_STATUSES.NUMBER
+
+	const nearbyTiles = getNearbyTiles(board, {x: tile.x, y: tile.y})
+	const nearbyMines = nearbyTiles.reduce((count, t) => {
+		return count + (t.mine ? 1 : 0)
+	}, 0)
+
+	if(nearbyMines) {
+		tile.element.textContent = nearbyMines + ""
+	} else {
+		nearbyTiles.forEach(t => revealTile(board, t))
+	}
 }
 
 export const markTile = (tile: tileType) => {
@@ -85,4 +96,18 @@ export const markTile = (tile: tileType) => {
 	} else if (tile.status === TILE_STATUSES.MARKED) {
 		tile.status = TILE_STATUSES.HIDDEN
 	}
+}
+
+const getNearbyTiles = (board: tileType[][], {x, y}: {x: number, y: number}): tileType[] => {
+	const tiles: tileType[] = []
+
+	for(let xOffset = -1; xOffset <= 1; xOffset++) {
+		for(let yOffset = -1; yOffset <= 1; yOffset++) {
+			const tile = board[x + xOffset]?.[y + yOffset]
+			if (tile) {
+				tiles.push(tile)
+			}
+		}
+	}	
+	return tiles
 }

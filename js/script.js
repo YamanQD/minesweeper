@@ -1,5 +1,5 @@
 import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js';
-var BOARD_SIZE = 6, MINE_COUNT = 10;
+var BOARD_SIZE = 6, MINE_COUNT = 5;
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
 var minesLeftText = document.querySelector('[data-mines-left]');
@@ -10,7 +10,7 @@ board.forEach(function (row) {
         boardElement === null || boardElement === void 0 ? void 0 : boardElement.append(tile.element);
         tile.element.addEventListener('click', function () {
             revealTile(board, tile);
-            checkGameOver();
+            checkGameEnd();
         });
         tile.element.addEventListener('contextmenu', function (e) {
             e.preventDefault();
@@ -25,13 +25,14 @@ var countMinesLeft = function () {
     }, 0);
     minesLeftText.textContent = MINE_COUNT - markedMines + "";
 };
-var checkGameOver = function () {
-    var gameOver = board.some(function (row) {
-        return row.some(function (tile) {
-            return tile.status === TILE_STATUSES.MINE;
-        });
-    });
-    if (gameOver) {
+var checkGameEnd = function () {
+    var win = checkWin();
+    var lose = checkLose();
+    if (lose || win) {
+        boardElement.addEventListener("click", stopProp, { capture: true });
+        boardElement.addEventListener("contextmenu", stopProp, { capture: true });
+    }
+    if (lose) {
         board.forEach(function (row) {
             row.forEach(function (tile) {
                 if (tile.mine) {
@@ -40,4 +41,22 @@ var checkGameOver = function () {
             });
         });
     }
+};
+var checkLose = function () {
+    return board.some(function (row) {
+        return row.some(function (tile) {
+            return tile.status === TILE_STATUSES.MINE;
+        });
+    });
+};
+var checkWin = function () {
+    var revealedCount = board.reduce(function (count, row) {
+        return count + row.reduce(function (count, tile) {
+            return count + (tile.status === TILE_STATUSES.NUMBER ? 1 : 0);
+        }, 0);
+    }, 0);
+    return revealedCount === BOARD_SIZE * BOARD_SIZE - MINE_COUNT;
+};
+var stopProp = function (e) {
+    e.stopImmediatePropagation();
 };

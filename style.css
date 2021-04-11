@@ -34,4 +34,6 @@
 
 .board > [data-status="number"] {
   background-color: blue;
+  color: white;
+  font-size: 18px;
 }

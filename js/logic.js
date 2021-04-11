@@ -1,4 +1,4 @@
-var TILE_STATUSES = {
+export var TILE_STATUSES = {
     HIDDEN: 'hidden',
     MINE: 'mine',
     NUMBER: 'number',
@@ -11,7 +11,6 @@ export var createBoard = function (boardSize, numberOfMines) {
         var row = [];
         var _loop_2 = function (y) {
             var element = document.createElement('div');
-            element.dataset.status = TILE_STATUSES.HIDDEN;
             var tile = {
                 element: element,
                 x: x,
@@ -24,6 +23,7 @@ export var createBoard = function (boardSize, numberOfMines) {
                     this.element.dataset.status = value;
                 }
             };
+            tile.status = TILE_STATUSES.HIDDEN;
             row.push(tile);
         };
         for (var y = 0; y < boardSize; y++) {
@@ -57,4 +57,23 @@ var randomNumber = function (size) {
 };
 var tileIsEqual = function (tile1, tile2) {
     return tile1.x === tile2.x && tile1.y === tile2.y;
+};
+export var revealTile = function (board, tile) {
+    if (!(tile.status === TILE_STATUSES.HIDDEN)) {
+        return;
+    }
+    if (tile.mine) {
+        tile.status = TILE_STATUSES.MINE;
+    }
+    else {
+        tile.status = TILE_STATUSES.NUMBER;
+    }
+};
+export var markTile = function (tile) {
+    if (tile.status === TILE_STATUSES.HIDDEN) {
+        tile.status = TILE_STATUSES.MARKED;
+    }
+    else if (tile.status === TILE_STATUSES.MARKED) {
+        tile.status = TILE_STATUSES.HIDDEN;
+    }
 };

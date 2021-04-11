@@ -1,18 +1,19 @@
-type tile = {
-	element: Element,
+export type tileType = {
+	element: HTMLElement,
 	x: number,
 	y: number,
-	mine: boolean
+	mine: boolean,
+	status: string
 }
 
-const TILE_STATUSES = {
+export const TILE_STATUSES = {
 	HIDDEN: 'hidden',
 	MINE: 'mine',
 	NUMBER: 'number',
 	MARKED: 'marked'
 }
 
-export const createBoard = (boardSize: number, numberOfMines: number): tile[][] => {
+export const createBoard = (boardSize: number, numberOfMines: number): tileType[][] => {
 	const board = []
 	const minePositions: {x: number, y: number}[] = getMinePositions(boardSize, numberOfMines)
 
@@ -20,7 +21,6 @@ export const createBoard = (boardSize: number, numberOfMines: number): tile[][] 
 		const row = []
 		for (let y = 0; y < boardSize; y++) {
 			const element = document.createElement('div')
-			element.dataset.status = TILE_STATUSES.HIDDEN
 
 			const tile = {
 				element,
@@ -34,6 +34,7 @@ export const createBoard = (boardSize: number, numberOfMines: number): tile[][] 
 					this.element.dataset.status = value
 				}
 			}
+			tile.status = TILE_STATUSES.HIDDEN
 			row.push(tile)
 		}
 		board.push(row)
@@ -65,3 +66,23 @@ const randomNumber = (size: number): number => {
 const tileIsEqual = (tile1: any, tile2: any): boolean => {
 	return tile1.x === tile2.x && tile1.y === tile2.y
 } 
+
+export const revealTile = (board: tileType[][], tile: tileType): void => {
+	if(!(tile.status === TILE_STATUSES.HIDDEN)) {
+		return
+	}
+
+    if (tile.mine) {
+        tile.status = TILE_STATUSES.MINE
+    } else {
+        tile.status = TILE_STATUSES.NUMBER
+    }
+}
+
+export const markTile = (tile: tileType) => {
+	if (tile.status === TILE_STATUSES.HIDDEN) {
+		tile.status = TILE_STATUSES.MARKED
+	} else if (tile.status === TILE_STATUSES.MARKED) {
+		tile.status = TILE_STATUSES.HIDDEN
+	}
+}

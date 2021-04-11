@@ -1,0 +1,29 @@
+.board {
+  display: grid;
+  grid-template-rows: repeat(var(--size), 60px);
+  grid-template-columns: repeat(var(--size), 60px);
+  gap: 8px;
+  background-color: white;
+}
+
+.board > * {
+  height: 100%;
+  width: 100%;
+  border: 2px solid grey;
+}
+
+.board > [data-status="hidden"] {
+  background-color: grey;
+}
+
+.board > [data-status="mine"] {
+  background-color: red;
+}
+
+.board > [data-status="marked"] {
+  background-color: yellow;
+}
+
+.board > [data-status="number"] {
+  background-color: blue;
+}

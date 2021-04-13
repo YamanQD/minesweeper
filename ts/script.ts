@@ -1,6 +1,6 @@
 import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js'
 
-const BOARD_SIZE = 6, MINE_COUNT = 5
+const BOARD_SIZE = 9, MINE_COUNT = 16
 
 const board = createBoard(BOARD_SIZE, MINE_COUNT)
 const boardElement = <HTMLElement> document.querySelector('.board')
@@ -47,7 +47,24 @@ const checkGameEnd = (): void => {
         gameEndText.textContent = "YOU LOSE!"
         board.forEach(row => {
             row.forEach(tile => {
-                if (tile.mine) {
+                if (tile.status === TILE_STATUSES.MARKED) {
+                    if (tile.mine) {
+                        tile.element.style.setProperty('background-color', '#F88F32')
+                    } else {
+                        // tile.element.style.setProperty('background-color', '#1AD927')
+                        tile.element.className = 'crossed-flag-container'
+                        const cross = document.createElement('div')
+                        cross.textContent = 'X'
+                        cross.className = 'cross'
+                        tile.element.removeChild(<Node> tile.element.firstChild)
+                        tile.element.appendChild(cross)
+                    }
+                } else if (tile.mine) {
+                    const img = document.createElement('img')
+                    img.src = './assets/mine.png'
+                    img.setAttribute('draggable', 'false')
+                    img.className = 'mine'
+                    tile.element.appendChild(img)
                     tile.status = TILE_STATUSES.MINE
                 }
             })

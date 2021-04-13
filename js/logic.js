@@ -4,6 +4,7 @@ export var TILE_STATUSES = {
     NUMBER: 'number',
     MARKED: 'marked'
 };
+export var TILE_NUMBERS = ['0', '1', '2', '3', '4', '5', '6', '7', '8'];
 export var createBoard = function (boardSize, numberOfMines) {
     var board = [];
     var minePositions = getMinePositions(boardSize, numberOfMines);
@@ -21,6 +22,12 @@ export var createBoard = function (boardSize, numberOfMines) {
                 },
                 set status(value) {
                     this.element.dataset.status = value;
+                },
+                get num() {
+                    return this.element.dataset.num;
+                },
+                set num(value) {
+                    this.element.dataset.num = value;
                 }
             };
             tile.status = TILE_STATUSES.HIDDEN;
@@ -59,7 +66,7 @@ var positionIsEqual = function (tile1, tile2) {
     return tile1.x === tile2.x && tile1.y === tile2.y;
 };
 export var revealTile = function (board, tile) {
-    if (!(tile.status === TILE_STATUSES.HIDDEN)) {
+    if (tile.status !== TILE_STATUSES.HIDDEN) {
         return;
     }
     if (tile.mine) {
@@ -71,6 +78,7 @@ export var revealTile = function (board, tile) {
     var nearbyMines = nearbyTiles.reduce(function (count, t) {
         return count + (t.mine ? 1 : 0);
     }, 0);
+    tile.num = TILE_NUMBERS[nearbyMines];
     if (nearbyMines) {
         tile.element.textContent = nearbyMines + "";
     }
@@ -81,9 +89,14 @@ export var revealTile = function (board, tile) {
 export var markTile = function (tile) {
     if (tile.status === TILE_STATUSES.HIDDEN) {
         tile.status = TILE_STATUSES.MARKED;
+        var img = document.createElement('img');
+        img.src = './assets/flag.png';
+        img.className = 'flag';
+        tile.element.appendChild(img);
     }
     else if (tile.status === TILE_STATUSES.MARKED) {
         tile.status = TILE_STATUSES.HIDDEN;
+        tile.element.removeChild(tile.element.firstChild);
     }
 };
 var getNearbyTiles = function (board, _a) {

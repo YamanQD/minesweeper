@@ -2,43 +2,142 @@
   box-sizing: border-box;
 }
 
-.game-end {
-  font-size: 28px;
-  color: red;
+html,
+body {
+  background-color: #1a84fd;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.container {
+  /* max-width: 700px; */
+  width: fit-content;
+  height: fit-content;
+  margin: 5vh auto;
+  padding: 0 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #2a2a2a;
+  color: white;
+  border-radius: 7px;
+  box-shadow: -7px 10px 10px rgba(65, 65, 65, 0.883);
+}
+
+.subtext {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding-bottom: 10px;
 }
 
 .board {
   display: grid;
-  grid-template-rows: repeat(var(--size), 60px);
-  grid-template-columns: repeat(var(--size), 60px);
-  gap: 6px;
-  background-color: white;
+  grid-template-rows: repeat(var(--size), 30px);
+  grid-template-columns: repeat(var(--size), 30px);
+  gap: 0px;
+  user-select: none;
 }
 
 .board > * {
   height: 100%;
   width: 100%;
-  border: 2px solid grey;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px;
+  font-weight: 700;
+  border-radius: 3px;
+  border: 1px solid #2a2a2a;
 }
 
+.mine,
+.flag {
+  width: 100%;
+  height: 100%;
+}
+
+.crossed-flag-container {
+  position: relative;
+  text-align: center;
+}
+
+.cross {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: sans-serif;
+  font-size: 33px;
+  font-weight: 100;
+  color: rgba(243, 63, 63, 0.794);
+  margin-top: 1px;
+}
+
+/* Tiles */
 .board > [data-status="hidden"] {
-  background-color: grey;
+  background-color: rgb(109, 100, 100);
+  box-shadow: 2.5px 2.5px 2px rgb(185, 183, 183) inset;
 }
 
 .board > [data-status="mine"] {
   background-color: red;
+  padding-top: 1px;
+  padding-left: 2.5px;
 }
 
 .board > [data-status="marked"] {
-  background-color: yellow;
+  /* background-color: rgb(224, 214, 75); */
+  background-color: rgb(109, 100, 100);
+  padding: 2px 0 2px 3px;
+  box-shadow: 2.5px 2.5px 2px rgb(185, 183, 183) inset;
+  /* box-shadow: 1.5px 1.5px rgb(255, 248, 145) inset; */
 }
 
 .board > [data-status="number"] {
-  background-color: blue;
-  color: white;
+  background-color: #c5c2c2;
+  box-shadow: 2px 2px 3px grey inset;
   font-size: 18px;
+}
+
+/* Numbers */
+
+.board > [data-num="1"] {
+  color: #1072f6;
+}
+
+.board > [data-num="2"] {
+  color: #12ca0f;
+}
+
+.board > [data-num="3"] {
+  color: #f42415;
+}
+
+.board > [data-num="4"] {
+  color: #a200ff;
+}
+
+.board > [data-num="5"] {
+  color: #ffe600;
+}
+
+.board > [data-num="6"] {
+  color: #ea00ff;
+}
+
+.board > [data-num="7"] {
+  color: #940b0b;
+}
+
+.board > [data-num="8"] {
+  color: #000;
 }

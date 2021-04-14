@@ -10,14 +10,6 @@ body {
   margin: 0;
 }
 
-img {
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
-  user-select: none;
-}
-
 .container {
   /* max-width: 700px; */
   width: fit-content;
@@ -33,17 +25,26 @@ img {
   box-shadow: -7px 10px 10px rgba(65, 65, 65, 0.883);
 }
 
+h1 {
+  font-size: 46px;
+}
+
 .subtext {
   display: flex;
   align-items: center;
-  font-size: 18px;
+  font-size: 24px;
   padding-bottom: 10px;
+}
+
+.subtext > img {
+  height: 45px;
+  width: 45px;
 }
 
 .board {
   display: grid;
-  grid-template-rows: repeat(var(--size), 30px);
-  grid-template-columns: repeat(var(--size), 30px);
+  grid-template-rows: repeat(var(--size), 40px);
+  grid-template-columns: repeat(var(--size), 40px);
   gap: 0px;
   user-select: none;
 }

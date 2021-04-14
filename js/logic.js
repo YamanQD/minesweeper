@@ -92,6 +92,7 @@ export var markTile = function (tile) {
         var img = document.createElement('img');
         img.src = './assets/flag.png';
         img.className = 'flag';
+        img.setAttribute('draggable', 'false');
         tile.element.appendChild(img);
     }
     else if (tile.status === TILE_STATUSES.MARKED) {

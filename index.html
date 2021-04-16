@@ -12,11 +12,16 @@
 <body>
 	<div class="container">
 		<h1 class="title">Minesweeper</h1>
-		<div class="subtext"><img src="./assets/mine.png" draggable="false"> x<span data-mines-left></span>
+		<div class="subtext">
+			<div class="mine-count"><img src="./assets/mine.png" draggable="false"> x<div data-mines-left></div>
+			</div>
+			<div class="timer"><img src="./assets/clock.png" draggable="false">
+				<div class="time"></div>
+			</div>
 		</div>
 		<div class="board"></div>
 		<h5 class="game-end"></h5>
-		<button class="replay-btn">replay</button>
+		<button class="button replay-btn">replay</button>
 	</div>
 	<script type="module" src="./js/script.js"></script>
 </body>

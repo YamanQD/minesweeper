@@ -76,13 +76,12 @@ const positionIsEqual = (tile1: any, tile2: any): boolean => {
 	return tile1.x === tile2.x && tile1.y === tile2.y
 }
 
-export const revealTile = (board: tile[][], tile: tile): void => {
+export const revealTile = (board: tile[][], tile: tile, handleLose: Function): void => {
 	if (tile.status !== TILE_STATUSES.HIDDEN) {
 		return
 	}
 	if (tile.mine) {
-		tile.status = TILE_STATUSES.MINE
-		return
+		return handleLose()
 	}
 
 	tile.status = TILE_STATUSES.NUMBER
@@ -97,7 +96,7 @@ export const revealTile = (board: tile[][], tile: tile): void => {
 	if (nearbyMines) {
 		tile.element.textContent = nearbyMines + ""
 	} else {
-		nearbyTiles.forEach(t => revealTile(board, t))
+		nearbyTiles.forEach(t => revealTile(board, t, handleLose))
 	}
 }
 

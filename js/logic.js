@@ -65,13 +65,12 @@ var randomNumber = function (size) {
 var positionIsEqual = function (tile1, tile2) {
     return tile1.x === tile2.x && tile1.y === tile2.y;
 };
-export var revealTile = function (board, tile) {
+export var revealTile = function (board, tile, handleLose) {
     if (tile.status !== TILE_STATUSES.HIDDEN) {
         return;
     }
     if (tile.mine) {
-        tile.status = TILE_STATUSES.MINE;
-        return;
+        return handleLose();
     }
     tile.status = TILE_STATUSES.NUMBER;
     var nearbyTiles = getNearbyTiles(board, { x: tile.x, y: tile.y });
@@ -83,7 +82,7 @@ export var revealTile = function (board, tile) {
         tile.element.textContent = nearbyMines + "";
     }
     else {
-        nearbyTiles.forEach(function (t) { return revealTile(board, t); });
+        nearbyTiles.forEach(function (t) { return revealTile(board, t, handleLose); });
     }
 };
 export var markTile = function (tile) {

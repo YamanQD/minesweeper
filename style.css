@@ -51,8 +51,17 @@ h1 {
 
 .mine-count img,
 .timer img {
-  height: 45px;
-  width: 45px;
+  margin-right: 3px;
+}
+
+.mine-count img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.timer img {
+  height: 2.5rem;
+  width: 2.5rem;
 }
 
 .board {
@@ -72,6 +81,7 @@ h1 {
   font-weight: 700;
   border-radius: 3px;
   border: 1px solid #2a2a2a;
+  transition: all .1s;
 }
 
 .mine,
@@ -91,7 +101,7 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
   font-family: sans-serif;
-  font-size: 33px;
+  font-size: 3rem;
   font-weight: 100;
   color: rgba(243, 63, 63, 0.794);
   margin-top: 1px;
@@ -160,7 +170,7 @@ h1 {
 .board > [data-status="mine"] {
   background-color: red;
   padding-top: 1px;
-  padding-left: 2.5px;
+  padding-left: 3.5px;
 }
 
 .board > [data-status="marked"] {

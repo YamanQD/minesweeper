@@ -1,5 +1,5 @@
-import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js';
-var BOARD_SIZE = 9, MINE_COUNT = 5;
+import { createBoard, revealTile, markTile, revealMine, getMineTimeouts, randomNumber, TILE_STATUSES } from './logic.js';
+var BOARD_SIZE = 9, MINE_COUNT = 20;
 var time = 0, isPlaying = true, timeInterval;
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
@@ -83,6 +83,7 @@ var loseGame = function () {
         });
     });
     gameEndText.textContent = "YOU LOSE!";
+    var timeouts = getMineTimeouts(MINE_COUNT);
     board.forEach(function (row) {
         row.forEach(function (tile) {
             if (tile.status === TILE_STATUSES.MARKED) {
@@ -90,7 +91,6 @@ var loseGame = function () {
                     tile.element.style.setProperty('background-color', '#F88F32');
                 }
                 else {
-                    // tile.element.style.setProperty('background-color', '#1AD927')
                     tile.element.className = 'crossed-flag-container';
                     var cross = document.createElement('div');
                     cross.textContent = 'X';
@@ -99,13 +99,13 @@ var loseGame = function () {
                     tile.element.appendChild(cross);
                 }
             }
-            else if (tile.mine) {
-                var img = document.createElement('img');
-                img.src = './assets/mine.png';
-                img.setAttribute('draggable', 'false');
-                img.className = 'mine';
-                tile.element.appendChild(img);
-                tile.status = TILE_STATUSES.MINE;
+            else if (tile.mine && !tile.element.hasChildNodes()) {
+                var timeout_1 = timeouts[randomNumber(timeouts.length - 1)];
+                console.log(timeouts, timeout_1);
+                setTimeout(function () {
+                    revealMine(tile);
+                }, timeout_1);
+                timeouts = timeouts.filter(function (t) { return t !== timeout_1; });
             }
         });
     });

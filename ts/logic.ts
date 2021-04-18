@@ -68,7 +68,7 @@ const getMinePositions = (boardSize: number, numberOfMines: number): { x: number
 	return positions
 }
 
-const randomNumber = (size: number): number => {
+export const randomNumber = (size: number): number => {
 	return Math.floor(Math.random() * size)
 }
 
@@ -81,6 +81,7 @@ export const revealTile = (board: tile[][], tile: tile, handleLose: Function): v
 		return
 	}
 	if (tile.mine) {
+		revealMine(tile)
 		return handleLose()
 	}
 
@@ -102,17 +103,9 @@ export const revealTile = (board: tile[][], tile: tile, handleLose: Function): v
 
 export const markTile = (tile: tile) => {
 	if (tile.status === TILE_STATUSES.HIDDEN) {
-		tile.status = TILE_STATUSES.MARKED
-
-		const img = document.createElement('img')
-		img.src = './assets/flag.png'
-		img.className = 'flag'
-		img.setAttribute('draggable', 'false')
-
-		tile.element.appendChild(img)
+		showFlag(tile)
 	} else if (tile.status === TILE_STATUSES.MARKED) {
-		tile.status = TILE_STATUSES.HIDDEN
-		tile.element.removeChild(<Node>tile.element.firstChild)
+		hideFlag(tile)
 	}
 }
 
@@ -128,4 +121,52 @@ const getNearbyTiles = (board: tile[][], { x, y }: { x: number, y: number }): ti
 		}
 	}
 	return tiles
+}
+
+export const revealMine = (tile: tile) => {
+	const img = document.createElement('img')
+	img.src = './assets/mine.png'
+	img.setAttribute('draggable', 'false')
+	img.classList.add('mine_small')
+	tile.element.appendChild(img)
+
+	setTimeout(() => {
+		img.classList.add('mine_large')
+	}, 10);
+
+	setTimeout(() => {
+		tile.status = TILE_STATUSES.MINE
+	}, 50);
+}
+
+const showFlag = (tile: tile) => {
+	const img = document.createElement('img')
+	img.src = './assets/flag.png'
+	img.setAttribute('draggable', 'false')
+	img.classList.add('flag_small')
+	tile.element.appendChild(img)
+	tile.status = TILE_STATUSES.MARKED
+
+	setTimeout(() => {
+		img.classList.add('flag_large')
+	}, 10);
+}
+
+const hideFlag = (tile: tile) => {
+
+	tile.element.firstElementChild?.classList.remove('flag_large')
+
+	setTimeout(() => {
+		tile.status = TILE_STATUSES.HIDDEN
+		tile.element.removeChild(<Node>tile.element.firstChild)
+	}, 60)
+}
+export const getMineTimeouts = (mineCount: number) => {
+	const timeouts: number[] = []
+
+	for (let timeout = 200; timeout < mineCount * 200; timeout += 200) {
+		timeouts.push(timeout)
+	}
+
+	return timeouts
 }

@@ -1,6 +1,14 @@
-import { createBoard, revealTile, markTile, TILE_STATUSES } from './logic.js'
+import {
+    createBoard,
+    revealTile,
+    markTile,
+    revealMine,
+    getMineTimeouts,
+    randomNumber,
+    TILE_STATUSES
+} from './logic.js'
 
-const BOARD_SIZE = 9, MINE_COUNT = 5
+const BOARD_SIZE = 9, MINE_COUNT = 20
 let time = 0, isPlaying = true, timeInterval: number
 
 let board = createBoard(BOARD_SIZE, MINE_COUNT)
@@ -97,30 +105,32 @@ const loseGame = () => {
         })
     })
     gameEndText.textContent = "YOU LOSE!"
-        board.forEach(row => {
-            row.forEach(tile => {
-                if (tile.status === TILE_STATUSES.MARKED) {
-                    if (tile.mine) {
-                        tile.element.style.setProperty('background-color', '#F88F32')
-                    } else {
-                        // tile.element.style.setProperty('background-color', '#1AD927')
-                        tile.element.className = 'crossed-flag-container'
-                        const cross = document.createElement('div')
-                        cross.textContent = 'X'
-                        cross.className = 'cross'
-                        tile.element.removeChild(<Node>tile.element.firstChild)
-                        tile.element.appendChild(cross)
-                    }
-                } else if (tile.mine) {
-                    const img = document.createElement('img')
-                    img.src = './assets/mine.png'
-                    img.setAttribute('draggable', 'false')
-                    img.className = 'mine'
-                    tile.element.appendChild(img)
-                    tile.status = TILE_STATUSES.MINE
+
+    let timeouts = getMineTimeouts(MINE_COUNT)
+    board.forEach(row => {
+        row.forEach(tile => {
+            if (tile.status === TILE_STATUSES.MARKED) {
+                if (tile.mine) {
+                    tile.element.style.setProperty('background-color', '#F88F32')
+                } else {
+                    tile.element.className = 'crossed-flag-container'
+                    const cross = document.createElement('div')
+                    cross.textContent = 'X'
+                    cross.className = 'cross'
+                    tile.element.removeChild(<Node>tile.element.firstChild)
+                    tile.element.appendChild(cross)
                 }
-            })
+            } else if (tile.mine && !tile.element.hasChildNodes()) {
+                const timeout = timeouts[randomNumber(timeouts.length - 1)]
+                console.log(timeouts, timeout);
+                
+                setTimeout(() => {
+                    revealMine(tile)
+                }, timeout)
+                timeouts = timeouts.filter(t => t !== timeout)
+            }
         })
+    })
 }
 
 const stopProp = (e: Event) => {

@@ -59,7 +59,7 @@ var getMinePositions = function (boardSize, numberOfMines) {
     }
     return positions;
 };
-var randomNumber = function (size) {
+export var randomNumber = function (size) {
     return Math.floor(Math.random() * size);
 };
 var positionIsEqual = function (tile1, tile2) {
@@ -70,6 +70,7 @@ export var revealTile = function (board, tile, handleLose) {
         return;
     }
     if (tile.mine) {
+        revealMine(tile);
         return handleLose();
     }
     tile.status = TILE_STATUSES.NUMBER;
@@ -87,16 +88,10 @@ export var revealTile = function (board, tile, handleLose) {
 };
 export var markTile = function (tile) {
     if (tile.status === TILE_STATUSES.HIDDEN) {
-        tile.status = TILE_STATUSES.MARKED;
-        var img = document.createElement('img');
-        img.src = './assets/flag.png';
-        img.className = 'flag';
-        img.setAttribute('draggable', 'false');
-        tile.element.appendChild(img);
+        showFlag(tile);
     }
     else if (tile.status === TILE_STATUSES.MARKED) {
-        tile.status = TILE_STATUSES.HIDDEN;
-        tile.element.removeChild(tile.element.firstChild);
+        hideFlag(tile);
     }
 };
 var getNearbyTiles = function (board, _a) {
@@ -112,4 +107,43 @@ var getNearbyTiles = function (board, _a) {
         }
     }
     return tiles;
+};
+export var revealMine = function (tile) {
+    var img = document.createElement('img');
+    img.src = './assets/mine.png';
+    img.setAttribute('draggable', 'false');
+    img.classList.add('mine_small');
+    tile.element.appendChild(img);
+    setTimeout(function () {
+        img.classList.add('mine_large');
+    }, 10);
+    setTimeout(function () {
+        tile.status = TILE_STATUSES.MINE;
+    }, 50);
+};
+var showFlag = function (tile) {
+    var img = document.createElement('img');
+    img.src = './assets/flag.png';
+    img.setAttribute('draggable', 'false');
+    img.classList.add('flag_small');
+    tile.element.appendChild(img);
+    tile.status = TILE_STATUSES.MARKED;
+    setTimeout(function () {
+        img.classList.add('flag_large');
+    }, 10);
+};
+var hideFlag = function (tile) {
+    var _a;
+    (_a = tile.element.firstElementChild) === null || _a === void 0 ? void 0 : _a.classList.remove('flag_large');
+    setTimeout(function () {
+        tile.status = TILE_STATUSES.HIDDEN;
+        tile.element.removeChild(tile.element.firstChild);
+    }, 60);
+};
+export var getMineTimeouts = function (mineCount) {
+    var timeouts = [];
+    for (var timeout = 200; timeout < mineCount * 200; timeout += 200) {
+        timeouts.push(timeout);
+    }
+    return timeouts;
 };

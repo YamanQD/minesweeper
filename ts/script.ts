@@ -8,19 +8,52 @@ import {
     TILE_STATUSES
 } from './logic.js'
 
-const BOARD_SIZE = 9, MINE_COUNT = 20
+let BOARD_SIZE = 2, MINE_COUNT = 1
 let time = 0, isPlaying = true, timeInterval: number
 
+const sizeCounter = <HTMLElement>document.getElementById('board-size-counter')
+const mineCountInput = <HTMLInputElement>document.querySelector('.mine-count-range')
+const nextButton = document.querySelector('.next')
+const prevButton = document.querySelector('.prev')
 let board = createBoard(BOARD_SIZE, MINE_COUNT)
 const boardElement = <HTMLElement>document.querySelector('.board')
 const gameEndText = <HTMLElement>document.querySelector('.game-end')
 const minesLeftText = <HTMLElement>document.querySelector('[data-mines-left]')
 const timer = <HTMLElement>document.querySelector('.time')
+const playBtn = document.querySelector('.play-btn')
 const replayBtn = document.querySelector('.replay-btn')
+const menu = document.querySelector('.menu')
+const subText = document.querySelector('.subtext')
+
+nextButton?.addEventListener('click', () => {
+    if (BOARD_SIZE === 10) return
+
+    BOARD_SIZE++
+    sizeCounter.innerHTML = BOARD_SIZE + ''
+    mineCountInput?.setAttribute('max', (BOARD_SIZE*BOARD_SIZE - 1) + '')
+})
+
+prevButton?.addEventListener('click', () => {
+    if (BOARD_SIZE === 2) return
+
+    BOARD_SIZE--
+    sizeCounter.innerHTML = BOARD_SIZE + '' 
+    mineCountInput?.setAttribute('max', (BOARD_SIZE*BOARD_SIZE - 1) + '')
+})
 
 replayBtn?.addEventListener('click', () => {
     gameEndText.textContent = ''
     clearInterval(timeInterval)
+    play()
+})
+
+playBtn?.addEventListener('click', () => {
+    MINE_COUNT = +mineCountInput.value
+    menu?.classList.add('hidden')
+    playBtn.classList.add('hidden')
+    boardElement.classList.remove('hidden')
+    subText?.classList.remove('hidden')
+    replayBtn?.classList.remove('hidden')
     play()
 })
 
@@ -137,4 +170,4 @@ const stopProp = (e: Event) => {
     e.stopImmediatePropagation()
 }
 
-play()
+// play()

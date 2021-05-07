@@ -12,17 +12,36 @@
 <body>
 	<div class="container">
 		<h1 class="title">Minesweeper</h1>
-		<div class="subtext">
-			<div class="mine-count"><img src="./assets/mine.png" draggable="false"> <div data-mines-left></div>
+		<div class="hidden subtext">
+			<div class="mines-left"><img src="./assets/mine.png" draggable="false">
+				<div data-mines-left></div>
 			</div>
 			<div class="timer"><img src="./assets/clock.png" draggable="false">
 				<div class="time">0</div>
 			</div>
 		</div>
-		<div class="board"></div>
+		<div class="hidden board"></div>
+		<div class="menu">
+			<div class="board-size-input">
+				<span class="next"></span>
+				<span class="prev"></span>
+				<div id="board-size-counter">2</div>
+			</div>
+			<div class="mine-count-input">
+				<span id="num-of-mines">1</span>
+				<input class="mine-count-range" type="range" name="num-of-mines" value="1" min="1" max="3"
+					onChange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)"></input>
+			</div>
+		</div>
+		<button class="play-btn button">PLAY</button>
 		<h5 class="game-end"></h5>
-		<button class="button replay-btn">replay</button>
+		<button class="hidden button replay-btn">replay</button>
 	</div>
+	<script type="text/javascript">
+		function rangeSlide(value) {
+			document.getElementById('num-of-mines').innerHTML = value;
+		}
+	</script>
 	<script type="module" src="./js/script.js"></script>
 </body>
 

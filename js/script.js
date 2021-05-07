@@ -1,15 +1,45 @@
 import { createBoard, revealTile, markTile, revealMine, getMineTimeouts, randomNumber, TILE_STATUSES } from './logic.js';
-var BOARD_SIZE = 9, MINE_COUNT = 20;
+var BOARD_SIZE = 2, MINE_COUNT = 1;
 var time = 0, isPlaying = true, timeInterval;
+var sizeCounter = document.getElementById('board-size-counter');
+var mineCountInput = document.querySelector('.mine-count-range');
+var nextButton = document.querySelector('.next');
+var prevButton = document.querySelector('.prev');
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
 var gameEndText = document.querySelector('.game-end');
 var minesLeftText = document.querySelector('[data-mines-left]');
 var timer = document.querySelector('.time');
+var playBtn = document.querySelector('.play-btn');
 var replayBtn = document.querySelector('.replay-btn');
+var menu = document.querySelector('.menu');
+var subText = document.querySelector('.subtext');
+nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener('click', function () {
+    if (BOARD_SIZE === 10)
+        return;
+    BOARD_SIZE++;
+    sizeCounter.innerHTML = BOARD_SIZE + '';
+    mineCountInput === null || mineCountInput === void 0 ? void 0 : mineCountInput.setAttribute('max', (BOARD_SIZE * BOARD_SIZE - 1) + '');
+});
+prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener('click', function () {
+    if (BOARD_SIZE === 2)
+        return;
+    BOARD_SIZE--;
+    sizeCounter.innerHTML = BOARD_SIZE + '';
+    mineCountInput === null || mineCountInput === void 0 ? void 0 : mineCountInput.setAttribute('max', (BOARD_SIZE * BOARD_SIZE - 1) + '');
+});
 replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.addEventListener('click', function () {
     gameEndText.textContent = '';
     clearInterval(timeInterval);
+    play();
+});
+playBtn === null || playBtn === void 0 ? void 0 : playBtn.addEventListener('click', function () {
+    MINE_COUNT = +mineCountInput.value;
+    menu === null || menu === void 0 ? void 0 : menu.classList.add('hidden');
+    playBtn.classList.add('hidden');
+    boardElement.classList.remove('hidden');
+    subText === null || subText === void 0 ? void 0 : subText.classList.remove('hidden');
+    replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.classList.remove('hidden');
     play();
 });
 var play = function () {
@@ -113,4 +143,4 @@ var loseGame = function () {
 var stopProp = function (e) {
     e.stopImmediatePropagation();
 };
-play();
+// play()

@@ -11,10 +11,13 @@ import {
 let BOARD_SIZE = 2, MINE_COUNT = 1
 let time = 0, isPlaying = true, timeInterval: number
 
+const container = <HTMLElement>document.querySelector('.container')
 const sizeCounter = <HTMLElement>document.getElementById('board-size-counter')
-const mineCountInput = <HTMLInputElement>document.querySelector('.mine-count-range')
-const nextButton = document.querySelector('.next')
-const prevButton = document.querySelector('.prev')
+const mineCountCounter = <HTMLElement>document.getElementById('mine-count-counter')
+const boardSizeIncrement = document.querySelector('.next')
+const boardSizeDecrement = document.querySelector('.prev')
+const mineCountIncrement = document.getElementsByClassName('next')[1]
+const mineCountDecrement = document.getElementsByClassName('prev')[1]
 let board = createBoard(BOARD_SIZE, MINE_COUNT)
 const boardElement = <HTMLElement>document.querySelector('.board')
 const gameEndText = <HTMLElement>document.querySelector('.game-end')
@@ -25,20 +28,40 @@ const replayBtn = document.querySelector('.replay-btn')
 const menu = document.querySelector('.menu')
 const subText = document.querySelector('.subtext')
 
-nextButton?.addEventListener('click', () => {
+boardSizeIncrement?.addEventListener('click', () => {
     if (BOARD_SIZE === 10) return
 
     BOARD_SIZE++
     sizeCounter.innerHTML = BOARD_SIZE + ''
-    mineCountInput?.setAttribute('max', (BOARD_SIZE*BOARD_SIZE - 1) + '')
 })
 
-prevButton?.addEventListener('click', () => {
+boardSizeDecrement?.addEventListener('click', () => {
     if (BOARD_SIZE === 2) return
 
     BOARD_SIZE--
+    if (MINE_COUNT >= BOARD_SIZE*BOARD_SIZE) {
+        MINE_COUNT = BOARD_SIZE*BOARD_SIZE - 1
+        mineCountCounter.innerHTML = MINE_COUNT + ''
+    }
     sizeCounter.innerHTML = BOARD_SIZE + '' 
-    mineCountInput?.setAttribute('max', (BOARD_SIZE*BOARD_SIZE - 1) + '')
+})
+
+mineCountIncrement.addEventListener('click', () => {
+    if(MINE_COUNT === BOARD_SIZE*BOARD_SIZE - 1) {
+        return
+    }
+
+    MINE_COUNT++
+    mineCountCounter.innerHTML = MINE_COUNT+ ''
+})
+
+mineCountDecrement.addEventListener('click', () => {
+    if(MINE_COUNT === 1) {
+        return
+    }
+
+    MINE_COUNT--
+    mineCountCounter.innerHTML = MINE_COUNT+ ''
 })
 
 replayBtn?.addEventListener('click', () => {
@@ -48,7 +71,6 @@ replayBtn?.addEventListener('click', () => {
 })
 
 playBtn?.addEventListener('click', () => {
-    MINE_COUNT = +mineCountInput.value
     menu?.classList.add('hidden')
     playBtn.classList.add('hidden')
     boardElement.classList.remove('hidden')
@@ -64,6 +86,7 @@ const play = () => {
 
     boardElement.innerHTML = ''
     boardElement.style.setProperty("--size", BOARD_SIZE + "")
+    container.classList.remove('menu-container')
 
     board = createBoard(BOARD_SIZE, MINE_COUNT)
 
@@ -155,7 +178,6 @@ const loseGame = () => {
                 }
             } else if (tile.mine && !tile.element.hasChildNodes()) {
                 const timeout = timeouts[randomNumber(timeouts.length - 1)]
-                console.log(timeouts, timeout);
                 
                 setTimeout(() => {
                     revealMine(tile)

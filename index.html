@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<div class="container">
+	<div class="container menu-container">
 		<h1 class="title">Minesweeper</h1>
 		<div class="hidden subtext">
 			<div class="mines-left"><img src="./assets/mine.png" draggable="false">
@@ -21,28 +21,35 @@
 			</div>
 		</div>
 		<div class="hidden board"></div>
-		<div class="menu">
-			<div class="board-size-input">
-				<span class="next"></span>
-				<span class="prev"></span>
-				<div id="board-size-counter">2</div>
-			</div>
-			<div class="mine-count-input">
-				<span id="num-of-mines">1</span>
-				<input class="mine-count-range" type="range" name="num-of-mines" value="1" min="1" max="3"
-					onChange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)"></input>
-			</div>
-		</div>
-		<button class="play-btn button">PLAY</button>
-		<h5 class="game-end"></h5>
 		<button class="hidden button replay-btn">replay</button>
-	</div>
-	<script type="text/javascript">
-		function rangeSlide(value) {
-			document.getElementById('num-of-mines').innerHTML = value;
-		}
-	</script>
-	<script type="module" src="./js/script.js"></script>
+		<div class="menu">
+			<div class="board-size-container">
+				<div class="board-size-label">Board Size</div>
+				<div class="board-size-input">
+					<span class="next"></span>
+					<span class="prev"></span>
+					<div id="board-size-counter">2</div>
+				</div>
+				<div class="board-size-label" style="visibility: hidden;">Board Size</div>
+			</div>
+			<div class="mine-count-container">
+				<div class="mine-count-label">Mines</div>
+				<div class="mine-count-input">
+					<span class="next"></span>
+					<span class="prev"></span>
+					<div id="mine-count-counter">1</div>
+				</div>
+				<div class="mine-count-label" style="visibility: hidden;">Mines</div>
+			</div>
+			<button class="play-btn button">PLAY</button>
+			<h5 class="game-end"></h5>
+		</div>
+		<script type="text/javascript">
+			function rangeSlide(value) {
+				document.getElementById('num-of-mines').innerHTML = value;
+			}
+		</script>
+		<script type="module" src="./js/script.js"></script>
 </body>
 
 </html>

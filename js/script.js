@@ -1,10 +1,13 @@
 import { createBoard, revealTile, markTile, revealMine, getMineTimeouts, randomNumber, TILE_STATUSES } from './logic.js';
 var BOARD_SIZE = 2, MINE_COUNT = 1;
 var time = 0, isPlaying = true, timeInterval;
+var container = document.querySelector('.container');
 var sizeCounter = document.getElementById('board-size-counter');
-var mineCountInput = document.querySelector('.mine-count-range');
-var nextButton = document.querySelector('.next');
-var prevButton = document.querySelector('.prev');
+var mineCountCounter = document.getElementById('mine-count-counter');
+var boardSizeIncrement = document.querySelector('.next');
+var boardSizeDecrement = document.querySelector('.prev');
+var mineCountIncrement = document.getElementsByClassName('next')[1];
+var mineCountDecrement = document.getElementsByClassName('prev')[1];
 var board = createBoard(BOARD_SIZE, MINE_COUNT);
 var boardElement = document.querySelector('.board');
 var gameEndText = document.querySelector('.game-end');
@@ -14,19 +17,35 @@ var playBtn = document.querySelector('.play-btn');
 var replayBtn = document.querySelector('.replay-btn');
 var menu = document.querySelector('.menu');
 var subText = document.querySelector('.subtext');
-nextButton === null || nextButton === void 0 ? void 0 : nextButton.addEventListener('click', function () {
+boardSizeIncrement === null || boardSizeIncrement === void 0 ? void 0 : boardSizeIncrement.addEventListener('click', function () {
     if (BOARD_SIZE === 10)
         return;
     BOARD_SIZE++;
     sizeCounter.innerHTML = BOARD_SIZE + '';
-    mineCountInput === null || mineCountInput === void 0 ? void 0 : mineCountInput.setAttribute('max', (BOARD_SIZE * BOARD_SIZE - 1) + '');
 });
-prevButton === null || prevButton === void 0 ? void 0 : prevButton.addEventListener('click', function () {
+boardSizeDecrement === null || boardSizeDecrement === void 0 ? void 0 : boardSizeDecrement.addEventListener('click', function () {
     if (BOARD_SIZE === 2)
         return;
     BOARD_SIZE--;
+    if (MINE_COUNT >= BOARD_SIZE * BOARD_SIZE) {
+        MINE_COUNT = BOARD_SIZE * BOARD_SIZE - 1;
+        mineCountCounter.innerHTML = MINE_COUNT + '';
+    }
     sizeCounter.innerHTML = BOARD_SIZE + '';
-    mineCountInput === null || mineCountInput === void 0 ? void 0 : mineCountInput.setAttribute('max', (BOARD_SIZE * BOARD_SIZE - 1) + '');
+});
+mineCountIncrement.addEventListener('click', function () {
+    if (MINE_COUNT === BOARD_SIZE * BOARD_SIZE - 1) {
+        return;
+    }
+    MINE_COUNT++;
+    mineCountCounter.innerHTML = MINE_COUNT + '';
+});
+mineCountDecrement.addEventListener('click', function () {
+    if (MINE_COUNT === 1) {
+        return;
+    }
+    MINE_COUNT--;
+    mineCountCounter.innerHTML = MINE_COUNT + '';
 });
 replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.addEventListener('click', function () {
     gameEndText.textContent = '';
@@ -34,7 +53,6 @@ replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.addEventListener
     play();
 });
 playBtn === null || playBtn === void 0 ? void 0 : playBtn.addEventListener('click', function () {
-    MINE_COUNT = +mineCountInput.value;
     menu === null || menu === void 0 ? void 0 : menu.classList.add('hidden');
     playBtn.classList.add('hidden');
     boardElement.classList.remove('hidden');
@@ -48,6 +66,7 @@ var play = function () {
     minesLeftText.textContent = MINE_COUNT + "";
     boardElement.innerHTML = '';
     boardElement.style.setProperty("--size", BOARD_SIZE + "");
+    container.classList.remove('menu-container');
     board = createBoard(BOARD_SIZE, MINE_COUNT);
     board.forEach(function (row) {
         row.forEach(function (tile) {
@@ -131,7 +150,6 @@ var loseGame = function () {
             }
             else if (tile.mine && !tile.element.hasChildNodes()) {
                 var timeout_1 = timeouts[randomNumber(timeouts.length - 1)];
-                console.log(timeouts, timeout_1);
                 setTimeout(function () {
                     revealMine(tile);
                 }, timeout_1);

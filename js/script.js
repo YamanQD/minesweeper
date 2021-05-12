@@ -14,7 +14,7 @@ var gameEndText = document.querySelector('.game-end');
 var minesLeftText = document.querySelector('[data-mines-left]');
 var timer = document.querySelector('.time');
 var playBtn = document.querySelector('.play-btn');
-var replayBtn = document.querySelector('.replay-btn');
+var menuBtn = document.querySelector('.menu-btn');
 var menu = document.querySelector('.menu');
 var subText = document.querySelector('.subtext');
 boardSizeIncrement === null || boardSizeIncrement === void 0 ? void 0 : boardSizeIncrement.addEventListener('click', function () {
@@ -47,17 +47,26 @@ mineCountDecrement.addEventListener('click', function () {
     MINE_COUNT--;
     mineCountCounter.innerHTML = MINE_COUNT + '';
 });
-replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.addEventListener('click', function () {
+menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.addEventListener('click', function () {
     gameEndText.textContent = '';
     clearInterval(timeInterval);
-    play();
+    MINE_COUNT = 1;
+    BOARD_SIZE = 2;
+    mineCountCounter.innerHTML = MINE_COUNT + '';
+    sizeCounter.innerHTML = BOARD_SIZE + '';
+    boardElement.classList.add('hidden');
+    subText === null || subText === void 0 ? void 0 : subText.classList.add('hidden');
+    menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.classList.add('hidden');
+    menu === null || menu === void 0 ? void 0 : menu.classList.remove('hidden');
+    playBtn === null || playBtn === void 0 ? void 0 : playBtn.classList.remove('hidden');
+    container.classList.add('menu-container');
 });
 playBtn === null || playBtn === void 0 ? void 0 : playBtn.addEventListener('click', function () {
     menu === null || menu === void 0 ? void 0 : menu.classList.add('hidden');
     playBtn.classList.add('hidden');
     boardElement.classList.remove('hidden');
     subText === null || subText === void 0 ? void 0 : subText.classList.remove('hidden');
-    replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.classList.remove('hidden');
+    menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.classList.remove('hidden');
     play();
 });
 var play = function () {

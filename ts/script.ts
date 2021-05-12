@@ -24,7 +24,7 @@ const gameEndText = <HTMLElement>document.querySelector('.game-end')
 const minesLeftText = <HTMLElement>document.querySelector('[data-mines-left]')
 const timer = <HTMLElement>document.querySelector('.time')
 const playBtn = document.querySelector('.play-btn')
-const replayBtn = document.querySelector('.replay-btn')
+const menuBtn = document.querySelector('.menu-btn')
 const menu = document.querySelector('.menu')
 const subText = document.querySelector('.subtext')
 
@@ -64,10 +64,21 @@ mineCountDecrement.addEventListener('click', () => {
     mineCountCounter.innerHTML = MINE_COUNT+ ''
 })
 
-replayBtn?.addEventListener('click', () => {
+menuBtn?.addEventListener('click', () => {
     gameEndText.textContent = ''
     clearInterval(timeInterval)
-    play()
+
+    MINE_COUNT = 1
+    BOARD_SIZE = 2
+    mineCountCounter.innerHTML = MINE_COUNT + ''
+    sizeCounter.innerHTML = BOARD_SIZE + ''
+
+    boardElement.classList.add('hidden')
+    subText?.classList.add('hidden')
+    menuBtn?.classList.add('hidden')
+    menu?.classList.remove('hidden')
+    playBtn?.classList.remove('hidden')
+    container.classList.add('menu-container')
 })
 
 playBtn?.addEventListener('click', () => {
@@ -75,7 +86,7 @@ playBtn?.addEventListener('click', () => {
     playBtn.classList.add('hidden')
     boardElement.classList.remove('hidden')
     subText?.classList.remove('hidden')
-    replayBtn?.classList.remove('hidden')
+    menuBtn?.classList.remove('hidden')
     play()
 })
 

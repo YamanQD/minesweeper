@@ -191,5 +191,3 @@ const loseGame = () => {
 const stopProp = (e: Event) => {
     e.stopImmediatePropagation()
 }
-
-// play()

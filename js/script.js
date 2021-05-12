@@ -161,4 +161,3 @@ var loseGame = function () {
 var stopProp = function (e) {
     e.stopImmediatePropagation();
 };
-// play()

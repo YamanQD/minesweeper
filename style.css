@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
 }
-
 html,
 body {
   background-color: #1a84fd;
@@ -13,7 +12,6 @@ body {
 .container {
   position: relative;
   max-width: 33%;
-  /* min-width: 20%; */
   height: max-content;
   margin: 5vh auto;
   padding: 0 50px;
@@ -25,55 +23,52 @@ body {
   border-radius: 7px;
   box-shadow: -7px 10px 10px rgba(65, 65, 65, 0.883);
 }
-
 .menu-container {
   width: 20% !important;
 }
 
 h1 {
-  font-size: 46px;
-}
-
-.subtext {
-  width: 60%;
-  /* padding: 0 50px; */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 24px;
-  padding-bottom: 10px;
-}
-
-.mines-left,
-.timer {
-  display: flex;
-  align-items: center;
-}
-
-[data-mines-left],
-.time {
-  width: 4ch;
-}
-
-.mines-left img,
-.timer img {
-  margin-right: 3px;
-}
-
-.mines-left img {
-  height: 3rem;
-  width: 3rem;
-}
-
-.timer img {
-  height: 2.5rem;
-  width: 2.5rem;
+  font-size: 3.5em;
 }
 
 .hidden {
   display: none !important;
 }
 
+.button {
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 3px;
+  position: relative;
+  background-color: #1a84fd;
+  border: none;
+  color: #fff;
+  padding: 15px;
+  width: 120px;
+  text-align: center;
+  transition-duration: 0.4s;
+  overflow: hidden;
+  box-shadow: 0 5px 15px #193047;
+  border-radius: 4px;
+  margin-top: 25px;
+}
+.button:hover {
+  background: #fff;
+  box-shadow: 0px 2px 10px 5px #1a84fd;
+  color: #000;
+}
+.button:active {
+  transition: 0.1s;
+  background-color: #1a84fd;
+  color: #fff;
+}
+.button:focus {
+  outline: 0;
+}
+
+/* Menu screen */
 .board-size-input,
 .mine-count-input {
   margin-top: 15px;
@@ -181,6 +176,42 @@ h1 {
   width: 100%;
 }
 
+/* Game screen */
+.subtext {
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.5em;
+  padding-bottom: 10px;
+}
+
+.mines-left,
+.timer {
+  display: flex;
+  align-items: center;
+}
+
+[data-mines-left],
+.time {
+  width: 4ch;
+}
+
+.mines-left img,
+.timer img {
+  margin-right: 3px;
+}
+
+.mines-left img {
+  height: 3rem;
+  width: 3rem;
+}
+
+.timer img {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
 .board {
   display: grid;
   grid-template-rows: repeat(var(--size), 50px);
@@ -247,42 +278,6 @@ h1 {
   padding-bottom: 20px;
 }
 
-.button {
-  text-align: center;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-size: 16px;
-  letter-spacing: 3px;
-  position: relative;
-  background-color: #1a84fd;
-  border: none;
-  color: #fff;
-  padding: 15px;
-  width: 120px;
-  text-align: center;
-  transition-duration: 0.4s;
-  overflow: hidden;
-  box-shadow: 0 5px 15px #193047;
-  border-radius: 4px;
-  margin-top: 25px;
-}
-
-.button:hover {
-  background: #fff;
-  box-shadow: 0px 2px 10px 5px #1a84fd;
-  color: #000;
-}
-
-.button:active {
-  transition: 0.1s;
-  background-color: #1a84fd;
-  color: #fff;
-}
-
-.button:focus {
-  outline: 0;
-}
-
 .play-btn {
   margin-bottom: 20px;
 }
@@ -292,23 +287,19 @@ h1 {
   background-color: rgb(109, 100, 100);
   box-shadow: 2.5px 2.5px 2px rgb(185, 183, 183) inset;
 }
-
 .board > [data-status="hidden"]:hover {
   transform: scale(1.1);
 }
-
 .board > [data-status="mine"] {
   background-color: red;
   padding-top: 1px;
   padding-left: 3.5px;
 }
-
 .board > [data-status="marked"] {
   background-color: rgb(109, 100, 100);
   padding: 2px 0 2px 3px;
   box-shadow: 2.5px 2.5px 2px rgb(185, 183, 183) inset;
 }
-
 .board > [data-status="number"] {
   background-color: #c5c2c2;
   box-shadow: 2px 2px 3px grey inset;
@@ -316,42 +307,34 @@ h1 {
 }
 
 /* Numbers */
-
 .board > [data-num="1"] {
   color: #1072f6;
 }
-
 .board > [data-num="2"] {
   color: #12ca0f;
 }
-
 .board > [data-num="3"] {
   color: #f42415;
 }
-
 .board > [data-num="4"] {
   color: #a200ff;
 }
-
 .board > [data-num="5"] {
   color: #ffe600;
 }
-
 .board > [data-num="6"] {
   color: #ea00ff;
 }
-
 .board > [data-num="7"] {
   color: #940b0b;
 }
-
 .board > [data-num="8"] {
   color: #000;
 }
 
 .game-over-window {
   position: absolute;
-  top: 174px;
+  top: 198px;
   bottom: calc(var(--size) * 50px);
   width: calc(var(--size) * 50px);
   height: calc(var(--size) * 50px);
@@ -366,6 +349,7 @@ h1 {
   font-weight: 700;
 }
 
+/* Media queries */
 @media screen and (max-width: 450px) {
   .container,
   .menu-container {

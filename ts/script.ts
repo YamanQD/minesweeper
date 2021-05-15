@@ -8,7 +8,7 @@ import {
     TILE_STATUSES
 } from './logic.js'
 
-let BOARD_SIZE = 2, MINE_COUNT = 1
+let BOARD_SIZE = 6, MINE_COUNT = 6
 let time = 0, isPlaying = true, timeInterval: number
 
 const container = <HTMLElement>document.querySelector('.container')
@@ -20,13 +20,14 @@ const mineCountIncrement = document.getElementsByClassName('next')[1]
 const mineCountDecrement = document.getElementsByClassName('prev')[1]
 let board = createBoard(BOARD_SIZE, MINE_COUNT)
 const boardElement = <HTMLElement>document.querySelector('.board')
-const gameEndText = <HTMLElement>document.querySelector('.game-end')
 const minesLeftText = <HTMLElement>document.querySelector('[data-mines-left]')
 const timer = <HTMLElement>document.querySelector('.time')
 const playBtn = document.querySelector('.play-btn')
 const menuBtn = document.querySelector('.menu-btn')
+const replayBtn = document.querySelector('.replay-btn')
 const menu = document.querySelector('.menu')
 const subText = document.querySelector('.subtext')
+const gameOverWindow = <HTMLElement>document.querySelector('.game-over-window')
 
 boardSizeIncrement?.addEventListener('click', () => {
     if (BOARD_SIZE === 10) return
@@ -65,20 +66,32 @@ mineCountDecrement.addEventListener('click', () => {
 })
 
 menuBtn?.addEventListener('click', () => {
-    gameEndText.textContent = ''
     clearInterval(timeInterval)
 
-    MINE_COUNT = 1
-    BOARD_SIZE = 2
     mineCountCounter.innerHTML = MINE_COUNT + ''
     sizeCounter.innerHTML = BOARD_SIZE + ''
+
+    container.classList.add('menu-container')
 
     boardElement.classList.add('hidden')
     subText?.classList.add('hidden')
     menuBtn?.classList.add('hidden')
+    replayBtn?.classList.add('hidden')
+    if (!gameOverWindow.classList.contains('hidden')) {
+        gameOverWindow.classList.add('hidden')
+    }
     menu?.classList.remove('hidden')
     playBtn?.classList.remove('hidden')
-    container.classList.add('menu-container')
+})
+
+replayBtn?.addEventListener('click', () => {
+    clearInterval(timeInterval)
+
+    if (!gameOverWindow.classList.contains('hidden')) {
+        gameOverWindow.classList.add('hidden')
+    }
+
+    play()
 })
 
 playBtn?.addEventListener('click', () => {
@@ -87,6 +100,7 @@ playBtn?.addEventListener('click', () => {
     boardElement.classList.remove('hidden')
     subText?.classList.remove('hidden')
     menuBtn?.classList.remove('hidden')
+    replayBtn?.classList.remove('hidden')
     play()
 })
 
@@ -96,7 +110,8 @@ const play = () => {
     minesLeftText.textContent = MINE_COUNT + ""
 
     boardElement.innerHTML = ''
-    boardElement.style.setProperty("--size", BOARD_SIZE + "")
+    boardElement.style.setProperty('--size', BOARD_SIZE + '')
+    gameOverWindow.style.setProperty('--size', BOARD_SIZE + '')
     container.classList.remove('menu-container')
 
     board = createBoard(BOARD_SIZE, MINE_COUNT)
@@ -134,10 +149,16 @@ const countTime = () => {
 }
 
 const countMinesLeft = (): void => {
-    const markedMines = board.reduce((count, row) => {
-        return count + row.filter(tile => tile.status === TILE_STATUSES.MARKED).length
-    }, 0)
-
+    // const markedMines = board.reduce((count, row) => {
+    //     return count + row.filter(tile => tile.status === TILE_STATUSES.MARKED).length
+    // }, 0)
+    let markedMines = 0
+    board.forEach(row => {
+        row.forEach(tile => {
+            if (tile.status === TILE_STATUSES.MARKED) markedMines++
+        })
+    })
+    console.log('markedMines', markedMines)
     minesLeftText.textContent = MINE_COUNT - markedMines + ""
 }
 
@@ -150,7 +171,7 @@ const checkWin = () => {
 
     const win = revealedCount === BOARD_SIZE * BOARD_SIZE - MINE_COUNT
     if (win) {
-        gameEndText.textContent = "YOU WIN!"
+        showWin()
         isPlaying = false
         board.forEach(row => {
             row.forEach(tile => {
@@ -171,7 +192,7 @@ const loseGame = () => {
             tile.element.style.setProperty('transform', 'none')
         })
     })
-    gameEndText.textContent = "YOU LOSE!"
+    showLose()
 
     let timeouts = getMineTimeouts(MINE_COUNT)
     board.forEach(row => {
@@ -197,6 +218,16 @@ const loseGame = () => {
             }
         })
     })
+}
+
+const showWin = () => {
+    gameOverWindow.innerHTML = 'YOU WIN!'
+    gameOverWindow.classList.remove('hidden')
+}
+
+const showLose = () => {
+    gameOverWindow.innerHTML = 'YOU LOSE!'
+    gameOverWindow.classList.remove('hidden')
 }
 
 const stopProp = (e: Event) => {

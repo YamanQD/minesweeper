@@ -5,12 +5,13 @@
 html,
 body {
   background-color: #1a84fd;
-  height: 100vh;
+  height: 95vh;
   padding: 0;
   margin: 0;
 }
 
 .container {
+  position: relative;
   width: fit-content;
   height: fit-content;
   margin: 5vh auto;
@@ -236,6 +237,15 @@ h1 {
   margin-top: 1px;
 }
 
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
 .button {
   text-align: center;
   text-transform: uppercase;
@@ -272,7 +282,7 @@ h1 {
   outline: 0;
 }
 
-.menu-btn {
+.play-btn {
   margin-bottom: 20px;
 }
 
@@ -336,4 +346,22 @@ h1 {
 
 .board > [data-num="8"] {
   color: #000;
+}
+
+.game-over-window {
+  position: absolute;
+  top: 174px;
+  bottom: calc(var(--size) * 50px);
+  width: calc(var(--size) * 50px);
+  height: calc(var(--size) * 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 0;
+  color: rgb(238, 89, 89);
+  font-weight: 700;
 }

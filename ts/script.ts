@@ -149,16 +149,9 @@ const countTime = () => {
 }
 
 const countMinesLeft = (): void => {
-    // const markedMines = board.reduce((count, row) => {
-    //     return count + row.filter(tile => tile.status === TILE_STATUSES.MARKED).length
-    // }, 0)
-    let markedMines = 0
-    board.forEach(row => {
-        row.forEach(tile => {
-            if (tile.status === TILE_STATUSES.MARKED) markedMines++
-        })
-    })
-    console.log('markedMines', markedMines)
+    const markedMines = board.reduce((count, row) => {
+        return count + row.filter(tile => tile.status === TILE_STATUSES.MARKED).length
+    }, 0)
     minesLeftText.textContent = MINE_COUNT - markedMines + ""
 }
 

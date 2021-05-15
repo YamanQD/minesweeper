@@ -118,17 +118,9 @@ var countTime = function () {
     timeInterval = setInterval(increaseTimer, 1000);
 };
 var countMinesLeft = function () {
-    // const markedMines = board.reduce((count, row) => {
-    //     return count + row.filter(tile => tile.status === TILE_STATUSES.MARKED).length
-    // }, 0)
-    var markedMines = 0;
-    board.forEach(function (row) {
-        row.forEach(function (tile) {
-            if (tile.status === TILE_STATUSES.MARKED)
-                markedMines++;
-        });
-    });
-    console.log('markedMines', markedMines);
+    var markedMines = board.reduce(function (count, row) {
+        return count + row.filter(function (tile) { return tile.status === TILE_STATUSES.MARKED; }).length;
+    }, 0);
     minesLeftText.textContent = MINE_COUNT - markedMines + "";
 };
 var checkWin = function () {

@@ -52,7 +52,6 @@ menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.addEventListener('clic
     clearInterval(timeInterval);
     mineCountCounter.innerHTML = MINE_COUNT + '';
     sizeCounter.innerHTML = BOARD_SIZE + '';
-    container.classList.add('menu-container');
     boardElement.classList.add('hidden');
     subText === null || subText === void 0 ? void 0 : subText.classList.add('hidden');
     menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.classList.add('hidden');
@@ -62,6 +61,7 @@ menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.addEventListener('clic
     }
     menu === null || menu === void 0 ? void 0 : menu.classList.remove('hidden');
     playBtn === null || playBtn === void 0 ? void 0 : playBtn.classList.remove('hidden');
+    container.classList.add('menu-container');
 });
 replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.addEventListener('click', function () {
     clearInterval(timeInterval);
@@ -77,6 +77,7 @@ playBtn === null || playBtn === void 0 ? void 0 : playBtn.addEventListener('clic
     subText === null || subText === void 0 ? void 0 : subText.classList.remove('hidden');
     menuBtn === null || menuBtn === void 0 ? void 0 : menuBtn.classList.remove('hidden');
     replayBtn === null || replayBtn === void 0 ? void 0 : replayBtn.classList.remove('hidden');
+    container.classList.remove('menu-container');
     play();
 });
 var play = function () {
@@ -86,7 +87,6 @@ var play = function () {
     boardElement.innerHTML = '';
     boardElement.style.setProperty('--size', BOARD_SIZE + '');
     gameOverWindow.style.setProperty('--size', BOARD_SIZE + '');
-    container.classList.remove('menu-container');
     board = createBoard(BOARD_SIZE, MINE_COUNT);
     board.forEach(function (row) {
         row.forEach(function (tile) {

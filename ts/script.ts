@@ -71,8 +71,6 @@ menuBtn?.addEventListener('click', () => {
     mineCountCounter.innerHTML = MINE_COUNT + ''
     sizeCounter.innerHTML = BOARD_SIZE + ''
 
-    container.classList.add('menu-container')
-
     boardElement.classList.add('hidden')
     subText?.classList.add('hidden')
     menuBtn?.classList.add('hidden')
@@ -82,6 +80,8 @@ menuBtn?.addEventListener('click', () => {
     }
     menu?.classList.remove('hidden')
     playBtn?.classList.remove('hidden')
+
+    container.classList.add('menu-container')
 })
 
 replayBtn?.addEventListener('click', () => {
@@ -101,6 +101,8 @@ playBtn?.addEventListener('click', () => {
     subText?.classList.remove('hidden')
     menuBtn?.classList.remove('hidden')
     replayBtn?.classList.remove('hidden')
+
+    container.classList.remove('menu-container')
     play()
 })
 
@@ -112,7 +114,6 @@ const play = () => {
     boardElement.innerHTML = ''
     boardElement.style.setProperty('--size', BOARD_SIZE + '')
     gameOverWindow.style.setProperty('--size', BOARD_SIZE + '')
-    container.classList.remove('menu-container')
 
     board = createBoard(BOARD_SIZE, MINE_COUNT)
 

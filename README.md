@@ -82,7 +82,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Yaman Qassas - [Twitter](https://twitter.com/YamanQD) - [E-Mail](mailto:yaman102011@gmail.com)
+Yaman Qassas - [Twitter](https://twitter.com/YamanQassas) - [Email](mailto:yaman102011@gmail.com)
 
 Project Link: [https://github.com/YamanQD/minesweeper](https://github.com/YamanQD/minesweeper)
 

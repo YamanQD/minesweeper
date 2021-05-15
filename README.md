@@ -99,6 +99,6 @@ Project Link: [https://github.com/YamanQD/minesweeper](https://github.com/YamanQ
 [issues-shield]: https://img.shields.io/github/issues/YamanQD/minesweeper.svg?style=for-the-badge
 [issues-url]: https://github.com/YamanQD/minesweeper/issues
 [license-shield]: https://img.shields.io/github/license/YamanQD/minesweeper.svg?style=for-the-badge
-[license-url]: https://github.com/YamanQD/minesweeper/blob/master/LICENSE.txt
+[license-url]: https://github.com/YamanQD/minesweeper/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/yaman-qassas

@@ -10,101 +10,103 @@ import {
 
 let BOARD_SIZE = 6, MINE_COUNT = 6
 let time = 0, isPlaying = true, timeInterval: number
-
-const container = <HTMLElement>document.querySelector('.container')
-const sizeCounter = <HTMLElement>document.getElementById('board-size-counter')
-const mineCountCounter = <HTMLElement>document.getElementById('mine-count-counter')
-const boardSizeIncrement = document.querySelector('.next')
-const boardSizeDecrement = document.querySelector('.prev')
-const mineCountIncrement = document.getElementsByClassName('next')[1]
-const mineCountDecrement = document.getElementsByClassName('prev')[1]
 let board = createBoard(BOARD_SIZE, MINE_COUNT)
-const boardElement = <HTMLElement>document.querySelector('.board')
-const minesLeftText = <HTMLElement>document.querySelector('[data-mines-left]')
-const timer = <HTMLElement>document.querySelector('.time')
-const playBtn = document.querySelector('.play-btn')
-const menuBtn = document.querySelector('.menu-btn')
-const replayBtn = document.querySelector('.replay-btn')
-const menu = document.querySelector('.menu')
-const subText = document.querySelector('.subtext')
-const gameOverWindow = <HTMLElement>document.querySelector('.game-over-window')
 
-boardSizeIncrement?.addEventListener('click', () => {
-    if (BOARD_SIZE === 10) return
+const container = <HTMLElement> document.querySelector('.container'),
+    sizeCounter = <HTMLElement> document.getElementById('board-size-counter'), //Menu screen board size text
+    mineCountCounter = <HTMLElement>document.getElementById('mine-count-counter'), //Menu screen mine count text
+    boardSizeIncrement = <HTMLElement> document.querySelector('.next'), //Menu screen board size right button
+    boardSizeDecrement = <HTMLElement> document.querySelector('.prev'), //Menu screen board size left button
+    mineCountIncrement = <HTMLElement> document.getElementsByClassName('next')[1], //Menu screen mine count right button
+    mineCountDecrement = <HTMLElement> document.getElementsByClassName('prev')[1], //Menu screen mine count left button
+    boardElement = <HTMLElement> document.querySelector('.board'),
+    minesLeftText = <HTMLElement> document.querySelector('[data-mines-left]'),
+    timer = <HTMLElement> document.querySelector('.time'),
+    playBtn = <HTMLElement> document.querySelector('.play-btn'),
+    menuBtn = <HTMLElement> document.querySelector('.menu-btn'),
+    replayBtn = <HTMLElement> document.querySelector('.replay-btn'),
+    menu = <HTMLElement> document.querySelector('.menu'),
+    subText = <HTMLElement> document.querySelector('.subtext'), //Game screen mines left and time counters
+    gameOverWindow = <HTMLElement> document.querySelector('.game-over-window')
 
-    BOARD_SIZE++
-    sizeCounter.innerHTML = BOARD_SIZE + ''
-})
+const addEventListeners = () => {
+    boardSizeIncrement.addEventListener('click', () => {
+        if (BOARD_SIZE === 10) return
 
-boardSizeDecrement?.addEventListener('click', () => {
-    if (BOARD_SIZE === 2) return
+        BOARD_SIZE++
+        sizeCounter.innerHTML = BOARD_SIZE + ''
+    })
 
-    BOARD_SIZE--
-    if (MINE_COUNT >= BOARD_SIZE*BOARD_SIZE) {
-        MINE_COUNT = BOARD_SIZE*BOARD_SIZE - 1
+    boardSizeDecrement.addEventListener('click', () => {
+        if (BOARD_SIZE === 2) return
+
+        BOARD_SIZE--
+        if (MINE_COUNT >= BOARD_SIZE*BOARD_SIZE) {
+            MINE_COUNT = BOARD_SIZE*BOARD_SIZE - 1
+            mineCountCounter.innerHTML = MINE_COUNT + ''
+        }
+        sizeCounter.innerHTML = BOARD_SIZE + '' 
+    })
+
+    mineCountIncrement.addEventListener('click', () => {
+        if(MINE_COUNT === BOARD_SIZE*BOARD_SIZE - 1) {
+            return
+        }
+
+        MINE_COUNT++
+        mineCountCounter.innerHTML = MINE_COUNT+ ''
+    })
+
+    mineCountDecrement.addEventListener('click', () => {
+        if(MINE_COUNT === 1) {
+            return
+        }
+
+        MINE_COUNT--
+        mineCountCounter.innerHTML = MINE_COUNT+ ''
+    })
+
+    menuBtn.addEventListener('click', () => {
+        clearInterval(timeInterval)
+
         mineCountCounter.innerHTML = MINE_COUNT + ''
-    }
-    sizeCounter.innerHTML = BOARD_SIZE + '' 
-})
+        sizeCounter.innerHTML = BOARD_SIZE + ''
 
-mineCountIncrement.addEventListener('click', () => {
-    if(MINE_COUNT === BOARD_SIZE*BOARD_SIZE - 1) {
-        return
-    }
+        boardElement.classList.add('hidden')
+        subText.classList.add('hidden')
+        menuBtn.classList.add('hidden')
+        replayBtn.classList.add('hidden')
+        if (!gameOverWindow.classList.contains('hidden')) {
+            gameOverWindow.classList.add('hidden')
+        }
+        menu.classList.remove('hidden')
+        playBtn.classList.remove('hidden')
 
-    MINE_COUNT++
-    mineCountCounter.innerHTML = MINE_COUNT+ ''
-})
+        container.classList.add('menu-container')
+    })
 
-mineCountDecrement.addEventListener('click', () => {
-    if(MINE_COUNT === 1) {
-        return
-    }
+    replayBtn.addEventListener('click', () => {
+        clearInterval(timeInterval)
 
-    MINE_COUNT--
-    mineCountCounter.innerHTML = MINE_COUNT+ ''
-})
+        if (!gameOverWindow.classList.contains('hidden')) {
+            gameOverWindow.classList.add('hidden')
+        }
 
-menuBtn?.addEventListener('click', () => {
-    clearInterval(timeInterval)
+        play()
+    })
 
-    mineCountCounter.innerHTML = MINE_COUNT + ''
-    sizeCounter.innerHTML = BOARD_SIZE + ''
+    playBtn.addEventListener('click', () => {
+        menu.classList.add('hidden')
+        playBtn.classList.add('hidden')
+        boardElement.classList.remove('hidden')
+        subText.classList.remove('hidden')
+        menuBtn.classList.remove('hidden')
+        replayBtn.classList.remove('hidden')
 
-    boardElement.classList.add('hidden')
-    subText?.classList.add('hidden')
-    menuBtn?.classList.add('hidden')
-    replayBtn?.classList.add('hidden')
-    if (!gameOverWindow.classList.contains('hidden')) {
-        gameOverWindow.classList.add('hidden')
-    }
-    menu?.classList.remove('hidden')
-    playBtn?.classList.remove('hidden')
-
-    container.classList.add('menu-container')
-})
-
-replayBtn?.addEventListener('click', () => {
-    clearInterval(timeInterval)
-
-    if (!gameOverWindow.classList.contains('hidden')) {
-        gameOverWindow.classList.add('hidden')
-    }
-
-    play()
-})
-
-playBtn?.addEventListener('click', () => {
-    menu?.classList.add('hidden')
-    playBtn.classList.add('hidden')
-    boardElement.classList.remove('hidden')
-    subText?.classList.remove('hidden')
-    menuBtn?.classList.remove('hidden')
-    replayBtn?.classList.remove('hidden')
-
-    container.classList.remove('menu-container')
-    play()
-})
+        container.classList.remove('menu-container')
+        play()
+    })
+}
 
 const play = () => {
     countTime()
@@ -119,7 +121,7 @@ const play = () => {
 
     board.forEach(row => {
         row.forEach(tile => {
-            boardElement?.append(tile.element)
+            boardElement.append(tile.element)
 
             tile.element.addEventListener('click', () => {
                 revealTile(board, tile, loseGame)
@@ -229,3 +231,5 @@ const showLose = () => {
 const stopProp = (e: Event) => {
     e.stopImmediatePropagation()
 }
+
+addEventListeners()

@@ -43,27 +43,8 @@ export var createBoard = function (boardSize, numberOfMines) {
     }
     return board;
 };
-var getMinePositions = function (boardSize, numberOfMines) {
-    var positions = [];
-    var _loop_3 = function () {
-        var position = {
-            x: randomNumber(boardSize),
-            y: randomNumber(boardSize)
-        };
-        if (positions.filter(function (p) { return positionIsEqual(p, position); }).length === 0) {
-            positions.push(position);
-        }
-    };
-    while (positions.length < numberOfMines) {
-        _loop_3();
-    }
-    return positions;
-};
 export var randomNumber = function (size) {
     return Math.floor(Math.random() * size);
-};
-var positionIsEqual = function (tile1, tile2) {
-    return tile1.x === tile2.x && tile1.y === tile2.y;
 };
 export var revealTile = function (board, tile, handleLose) {
     if (tile.status !== TILE_STATUSES.HIDDEN) {
@@ -94,6 +75,45 @@ export var markTile = function (tile) {
         hideFlag(tile);
     }
 };
+export var revealMine = function (tile) {
+    var img = document.createElement('img');
+    img.src = './assets/mine.png';
+    img.setAttribute('draggable', 'false');
+    img.classList.add('mine_small');
+    tile.element.appendChild(img);
+    setTimeout(function () {
+        img.classList.add('mine_large');
+    }, 10);
+    setTimeout(function () {
+        tile.status = TILE_STATUSES.MINE;
+    }, 50);
+};
+export var getMineTimeouts = function (mineCount) {
+    var timeouts = [];
+    for (var timeout = 200; timeout < mineCount * 200; timeout += 200) {
+        timeouts.push(timeout);
+    }
+    return timeouts;
+};
+var getMinePositions = function (boardSize, numberOfMines) {
+    var positions = [];
+    var _loop_3 = function () {
+        var position = {
+            x: randomNumber(boardSize),
+            y: randomNumber(boardSize)
+        };
+        if (positions.filter(function (p) { return positionIsEqual(p, position); }).length === 0) {
+            positions.push(position);
+        }
+    };
+    while (positions.length < numberOfMines) {
+        _loop_3();
+    }
+    return positions;
+};
+var positionIsEqual = function (tile1, tile2) {
+    return tile1.x === tile2.x && tile1.y === tile2.y;
+};
 var getNearbyTiles = function (board, _a) {
     var _b;
     var x = _a.x, y = _a.y;
@@ -107,19 +127,6 @@ var getNearbyTiles = function (board, _a) {
         }
     }
     return tiles;
-};
-export var revealMine = function (tile) {
-    var img = document.createElement('img');
-    img.src = './assets/mine.png';
-    img.setAttribute('draggable', 'false');
-    img.classList.add('mine_small');
-    tile.element.appendChild(img);
-    setTimeout(function () {
-        img.classList.add('mine_large');
-    }, 10);
-    setTimeout(function () {
-        tile.status = TILE_STATUSES.MINE;
-    }, 50);
 };
 var showFlag = function (tile) {
     var img = document.createElement('img');
@@ -139,11 +146,4 @@ var hideFlag = function (tile) {
         tile.status = TILE_STATUSES.HIDDEN;
         tile.element.removeChild(tile.element.firstChild);
     }, 60);
-};
-export var getMineTimeouts = function (mineCount) {
-    var timeouts = [];
-    for (var timeout = 200; timeout < mineCount * 200; timeout += 200) {
-        timeouts.push(timeout);
-    }
-    return timeouts;
 };

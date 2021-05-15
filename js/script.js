@@ -185,3 +185,4 @@ var showLose = function () {
 var stopProp = function (e) {
     e.stopImmediatePropagation();
 };
+addEventListeners();

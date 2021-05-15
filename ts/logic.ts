@@ -51,29 +51,8 @@ export const createBoard = (boardSize: number, numberOfMines: number): tile[][] 
 	return board
 }
 
-const getMinePositions = (boardSize: number, numberOfMines: number): { x: number, y: number }[] => {
-	const positions: { x: number, y: number }[] = []
-
-	while (positions.length < numberOfMines) {
-		const position = {
-			x: randomNumber(boardSize),
-			y: randomNumber(boardSize)
-		}
-
-		if (positions.filter(p => positionIsEqual(p, position)).length === 0) {
-			positions.push(position)
-		}
-	}
-
-	return positions
-}
-
 export const randomNumber = (size: number): number => {
 	return Math.floor(Math.random() * size)
-}
-
-const positionIsEqual = (tile1: any, tile2: any): boolean => {
-	return tile1.x === tile2.x && tile1.y === tile2.y
 }
 
 export const revealTile = (board: tile[][], tile: tile, handleLose: Function): void => {
@@ -109,20 +88,6 @@ export const markTile = (tile: tile) => {
 	}
 }
 
-const getNearbyTiles = (board: tile[][], { x, y }: { x: number, y: number }): tile[] => {
-	const tiles: tile[] = []
-
-	for (let xOffset = -1; xOffset <= 1; xOffset++) {
-		for (let yOffset = -1; yOffset <= 1; yOffset++) {
-			const tile = board[x + xOffset]?.[y + yOffset]
-			if (tile) {
-				tiles.push(tile)
-			}
-		}
-	}
-	return tiles
-}
-
 export const revealMine = (tile: tile) => {
 	const img = document.createElement('img')
 	img.src = './assets/mine.png'
@@ -137,6 +102,51 @@ export const revealMine = (tile: tile) => {
 	setTimeout(() => {
 		tile.status = TILE_STATUSES.MINE
 	}, 50);
+}
+
+export const getMineTimeouts = (mineCount: number) => { //Get timeouts of mine reveals when the game is lost
+	const timeouts: number[] = []
+
+	for (let timeout = 200; timeout < mineCount * 200; timeout += 200) {
+		timeouts.push(timeout)
+	}
+
+	return timeouts
+}
+
+const getMinePositions = (boardSize: number, numberOfMines: number): { x: number, y: number }[] => {
+	const positions: { x: number, y: number }[] = []
+
+	while (positions.length < numberOfMines) {
+		const position = {
+			x: randomNumber(boardSize),
+			y: randomNumber(boardSize)
+		}
+
+		if (positions.filter(p => positionIsEqual(p, position)).length === 0) {
+			positions.push(position)
+		}
+	}
+
+	return positions
+}
+
+const positionIsEqual = (tile1: any, tile2: any): boolean => {
+	return tile1.x === tile2.x && tile1.y === tile2.y
+}
+
+const getNearbyTiles = (board: tile[][], { x, y }: { x: number, y: number }): tile[] => {
+	const tiles: tile[] = []
+
+	for (let xOffset = -1; xOffset <= 1; xOffset++) {
+		for (let yOffset = -1; yOffset <= 1; yOffset++) {
+			const tile = board[x + xOffset]?.[y + yOffset]
+			if (tile) {
+				tiles.push(tile)
+			}
+		}
+	}
+	return tiles
 }
 
 const showFlag = (tile: tile) => {
@@ -160,13 +170,4 @@ const hideFlag = (tile: tile) => {
 		tile.status = TILE_STATUSES.HIDDEN
 		tile.element.removeChild(<Node>tile.element.firstChild)
 	}, 60)
-}
-export const getMineTimeouts = (mineCount: number) => {
-	const timeouts: number[] = []
-
-	for (let timeout = 200; timeout < mineCount * 200; timeout += 200) {
-		timeouts.push(timeout)
-	}
-
-	return timeouts
 }

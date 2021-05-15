@@ -12,8 +12,9 @@ body {
 
 .container {
   position: relative;
-  width: fit-content;
-  height: fit-content;
+  min-width: max-content;
+  max-width: 30%;
+  height: max-content;
   margin: 5vh auto;
   padding: 0 50px;
   display: flex;
@@ -77,12 +78,14 @@ h1 {
 .mine-count-input {
   margin-top: 15px;
   position: relative;
-  width: 80px;
+  width: 120px;
   height: 50px;
   border-radius: 40px;
   border: 2px solid rgba(255, 255, 255, 0.3);
   transition: 0.5s;
-  flex: 1;
+  font-size: 2em;
+  /* flex: 1; */
+  /* margin-left: 20%; */
 }
 
 .board-size-label,
@@ -91,7 +94,7 @@ h1 {
   font-weight: 700;
   align-self: center;
   margin-top: 9px;
-  width: 90px;
+  width: 200px;
   text-align: right;
   padding-right: 10px;
 }
@@ -151,7 +154,7 @@ h1 {
   text-align: center;
   line-height: 46px;
   color: #00deff;
-  font-size: 24px;
+  font-size: 90%;
   font-weight: 700;
   user-select: none;
 }
@@ -362,6 +365,5 @@ h1 {
   background-color: rgba(0, 0, 0, 0.5);
   margin: 0;
   padding: 0;
-  color: rgb(238, 89, 89);
   font-weight: 700;
 }

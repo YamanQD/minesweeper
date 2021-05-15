@@ -181,10 +181,12 @@ var loseGame = function () {
 var showWin = function () {
     gameOverWindow.innerHTML = 'YOU WIN!';
     gameOverWindow.classList.remove('hidden');
+    gameOverWindow.style.color = 'rgb(0,200,0)';
 };
 var showLose = function () {
     gameOverWindow.innerHTML = 'YOU LOSE!';
     gameOverWindow.classList.remove('hidden');
+    gameOverWindow.style.color = 'rgb(238, 89, 89)';
 };
 var stopProp = function (e) {
     e.stopImmediatePropagation();

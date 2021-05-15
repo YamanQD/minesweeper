@@ -216,11 +216,13 @@ const loseGame = () => {
 const showWin = () => {
     gameOverWindow.innerHTML = 'YOU WIN!'
     gameOverWindow.classList.remove('hidden')
+    gameOverWindow.style.color = 'rgb(0,200,0)'
 }
 
 const showLose = () => {
     gameOverWindow.innerHTML = 'YOU LOSE!'
     gameOverWindow.classList.remove('hidden')
+    gameOverWindow.style.color = 'rgb(238, 89, 89)'
 }
 
 const stopProp = (e: Event) => {

@@ -82,7 +82,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Yaman Qassas - [Twitter](https://twitter.com/YamanQD) - [E-Mail](mailto:yaman.alqassas@gmail.com)
+Yaman Qassas - [Twitter](https://twitter.com/YamanQD) - [E-Mail](mailto:yaman102011@gmail.com)
 
 Project Link: [https://github.com/YamanQD/minesweeper](https://github.com/YamanQD/minesweeper)
 
@@ -101,4 +101,4 @@ Project Link: [https://github.com/YamanQD/minesweeper](https://github.com/YamanQ
 [license-shield]: https://img.shields.io/github/license/YamanQD/minesweeper.svg?style=for-the-badge
 [license-url]: https://github.com/YamanQD/minesweeper/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/YamanQD
+[linkedin-url]: https://linkedin.com/in/yaman-qassas

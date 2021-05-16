@@ -37,14 +37,15 @@ To get a local copy up and running follow these simple steps.
    ```sh
    git clone https://github.com/YamanQD/minesweeper.git
    ```
-2. Install NPM packages
+2. Install TypeScript compiler if it doesn't exist on your machine
    ```sh
-   npm install
+   npm install -g typescript
    ```
 
 ### Demo
 
-To try the game without the trouble of cloning the project and installing the dependencies, visit [the demo site.](http://yaman.muhajreen.net/minesweeper)
+To try the game without the trouble of cloning the project, visit [the demo site.](http://yaman.muhajreen.net/minesweeper)
+
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -69,7 +70,6 @@ Contributions are what make the open source community such an amazing place to l
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
 
 
 <!-- LICENSE -->

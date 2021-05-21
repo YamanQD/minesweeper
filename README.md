@@ -41,6 +41,16 @@ To get a local copy up and running follow these simple steps.
    ```sh
    npm install -g typescript
    ```
+3. Navigate to the repo folder
+   ```sh
+   cd minesweeper
+   ```
+
+4. Compile TypeScript code to JavaScript
+    ```sh
+    tsc
+    ```
+
 
 ### Demo
 

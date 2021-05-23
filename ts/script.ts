@@ -31,14 +31,14 @@ const container = <HTMLElement> document.querySelector('.container'),
 
 const addEventListeners = () => {
     boardSizeIncrement.addEventListener('click', () => {
-        if (BOARD_SIZE === 10) return
+        if (BOARD_SIZE === 9) return
 
         BOARD_SIZE++
         sizeCounter.innerHTML = BOARD_SIZE + ''
     })
 
     boardSizeDecrement.addEventListener('click', () => {
-        if (BOARD_SIZE === 2) return
+        if (BOARD_SIZE === 4) return
 
         BOARD_SIZE--
         if (MINE_COUNT >= BOARD_SIZE*BOARD_SIZE) {

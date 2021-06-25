@@ -13,7 +13,7 @@
   <p align="center">
     A Classic Minesweeper Web Game
     <br />
-    <a href="http://yaman.muhajreen.net/minesweeper">View Demo</a>
+    <a href="https://yamanqd.github.io/minesweeper/">View Demo</a>
     ·
     <a href="https://github.com/YamanQD/minesweeper/issues">Report Bug</a>
     ·
@@ -37,24 +37,12 @@ To get a local copy up and running follow these simple steps.
    ```sh
    git clone https://github.com/YamanQD/minesweeper.git
    ```
-2. Install TypeScript compiler if it doesn't exist on your machine
-   ```sh
-   npm install -g typescript
-   ```
-3. Navigate to the repo folder
-   ```sh
-   cd minesweeper
-   ```
-
-4. Compile TypeScript code to JavaScript
-    ```sh
-    tsc
-    ```
+2. Run a local web server in the project root directory
 
 
 ### Demo
 
-To try the game without the trouble of cloning the project, visit [the demo site.](http://yaman.muhajreen.net/minesweeper)
+To try the game without the trouble of cloning the project, visit [the demo site.](https://yamanqd.github.io/minesweeper/)
 
 
 <!-- ROADMAP -->
